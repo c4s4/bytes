@@ -1,11 +1,11 @@
 use anyhow::{Context, Result};
 use clap::Parser;
 
-/// Convert strings to bytes array and back
+/// Convert string to bytes array and back
 #[derive(Parser)]
 #[command(version)]
 struct Cli {
-    /// Strings or bytes array to convert
+    /// String or bytes array to convert
     thing: String,
 }
 
