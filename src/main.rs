@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 use clap::Parser;
 
-/// Convert strings to byte arrays and back
+/// Convert strings to bytes array and back
 #[derive(Parser)]
 #[command(version)]
 struct Cli {
