@@ -33,6 +33,13 @@ $ bytes "[65, 66, 67]"
 ABC
 ```
 
+Its also works with hexadecimal:
+
+```bash
+$ bytes "[0x41, 0x42, 0x43]"
+ABC
+```
+
 Convert string to bytes array:
 
 ```bash
