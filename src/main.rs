@@ -40,11 +40,21 @@ fn bytes_to_string(b: String) -> Result<String> {
         return Err(anyhow::anyhow!("Invalid bytes array"));
     }
     let b = &b[1..b.len() - 1];
-    let bytes: Vec<u8> = b
+    if b.contains("0x") {
+        // Hexadecimal
+        let bytes: Vec<u8> = b
+            .split(", ")
+            .map(|x| u8::from_str_radix(&x[2..], 16).unwrap())
+            .collect();
+        return Ok(String::from_utf8(bytes).context("")?);
+    } else {
+        // Decimal
+        let bytes: Vec<u8> = b
         .split(", ")
         .map(|x| x.parse().unwrap())
         .collect();
-    Ok(String::from_utf8(bytes).context("")?)
+        return Ok(String::from_utf8(bytes).context("")?)
+    }
 }
 
 #[cfg(test)]
@@ -59,6 +69,12 @@ mod tests {
     #[test]
     fn test_bytes_to_string() -> Result<()> {
         assert_eq!(bytes_to_string("[65, 66, 67]".to_string())?, "ABC");
+        Ok(())
+    }
+
+    #[test]
+    fn test_bytes_hexa_to_string() -> Result<()> {
+        assert_eq!(bytes_to_string("[0x41, 0x42, 0x43]".to_string())?, "ABC");
         Ok(())
     }
 }
